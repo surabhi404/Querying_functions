@@ -1,0 +1,10 @@
+CREATE QUERY datetime_demo(/* Parameters here */) FOR GRAPH project1 { 
+
+  start = {Event.*};
+  results = SELECT s 
+  FROM start:a - (Belongs_to:e) - Bill_of_Events:s
+  WHERE (a.Event_Must_Start_By <= to_datetime("2022-07-16"));
+  
+  PRINT results; 
+  PRINT datetime_diff(to_datetime("2022-07-16"),now());
+}
