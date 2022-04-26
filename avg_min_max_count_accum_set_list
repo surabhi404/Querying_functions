@@ -1,0 +1,14 @@
+CREATE QUERY supply_demand_list_time_interval(/* Parameters here */) FOR GRAPH project1 { 
+ListAccum<STRING> @@supplydem;
+SetAccum<INT>@@setdemo;  
+Start = {Supply_Demand_Events.*};
+  Res = SELECT t 
+        FROM Start:a -(Has_Supply_Demand:e)-Supply_Demand:t 
+        WHERE  t.SD_Time_Interval<5
+        ACCUM @@supplydem += a.SD_Event_Name,@@setdemo+=a.SD_Event_Pickups;
+  PRINT (count(@@supplydem));
+  PRINT (avg(@@setdemo));
+  PRINT(min(@@setdemo));
+  PRINT(max(@@setdemo));
+  PRINT(sum(@@setdemo));
+}
